@@ -178,7 +178,8 @@ Json::Value ASTJsonConverter::inlineAssemblyIdentifierToJson(pair<assembly::Iden
 	tuple["declaration"] = idOrNull(_info.second.declaration);
 	tuple["isSlot"] = Json::Value(_info.second.isSlot);
 	tuple["isOffset"] = Json::Value(_info.second.isOffset);
-	tuple["valueSize"] = _info.second.valueSize;
+	solAssert(_info.second.valueSize <= std::numeric_limits<Json::LargestUInt>::max(), "");
+	tuple["valueSize"] = Json::Value(Json::LargestUInt(_info.second.valueSize));
 	return tuple;
 }
 
